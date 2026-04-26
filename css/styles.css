@@ -273,7 +273,44 @@ header.nav {
   font-weight: 400;
 }
 
-.hero-lead { margin-bottom: 40px; max-width: 520px; }
+.hero-lead { margin-bottom: 32px; max-width: 520px; }
+
+.hero-specs {
+  display: flex;
+  gap: 32px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line-soft);
+  border-bottom: 1px solid var(--line-soft);
+}
+.hero-spec {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+.hero-spec-num {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 36px);
+  line-height: 1;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+}
+.hero-spec-num span {
+  font-size: 0.5em;
+  font-weight: 400;
+  color: var(--ink-soft);
+  margin-left: 4px;
+  letter-spacing: 0;
+}
+.hero-spec-label {
+  font-size: 12px;
+  color: var(--muted);
+  margin-top: 8px;
+  line-height: 1.35;
+  letter-spacing: 0.01em;
+}
 
 .hero-triad {
   font-family: var(--font-display);
@@ -1160,6 +1197,9 @@ footer .f-bottom {
   .footer-grid { grid-template-columns: 1fr; }
   .hero-triad span { display: block; margin: 4px 0; }
   .hero-meta { flex-direction: column; gap: 6px; }
+  .hero-specs { gap: 18px; padding: 16px 0; }
+  .hero-spec-num { font-size: 24px; }
+  .hero-spec-label { font-size: 11px; }
   .hero-meta span::before { content: none; }
 }
 
