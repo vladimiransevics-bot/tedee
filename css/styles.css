@@ -349,7 +349,7 @@ header.nav {
 
 /* Hero visual — placeholder door/lock illustration */
 .hero-visual {
-  aspect-ratio: 4/5;
+  aspect-ratio: 3/4;
   background: linear-gradient(150deg, var(--paper-warm) 0%, var(--cream) 50%, var(--paper-warm) 100%);
   border-radius: 24px;
   position: relative;
