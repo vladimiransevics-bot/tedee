@@ -350,6 +350,9 @@ header.nav {
 /* Hero visual — placeholder door/lock illustration */
 .hero-visual {
   aspect-ratio: 4/5;
+  max-height: clamp(440px, 70vh, 640px);
+  width: auto;
+  justify-self: end;
   background: linear-gradient(150deg, var(--paper-warm) 0%, var(--cream) 50%, var(--paper-warm) 100%);
   border-radius: 24px;
   position: relative;
