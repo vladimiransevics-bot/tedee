@@ -20,6 +20,36 @@ document.querySelectorAll('.lang-toggle button').forEach(btn => {
   });
 });
 
+// Sticky mobile CTA: visible by default, hide while hero or contact are on screen
+(() => {
+  const cta = document.getElementById('stickyCta');
+  const hero = document.querySelector('.hero');
+  const contact = document.getElementById('contact');
+  if (!cta) return;
+
+  // Start hidden while user is at the top (hero is the very first section)
+  cta.classList.add('is-hidden');
+
+  let heroOnscreen = true;
+  let contactOnscreen = false;
+  const update = () => {
+    cta.classList.toggle('is-hidden', heroOnscreen || contactOnscreen);
+  };
+
+  if (hero) {
+    new IntersectionObserver(([e]) => {
+      heroOnscreen = e.isIntersecting && e.intersectionRatio > 0.05;
+      update();
+    }, { threshold: [0, 0.05, 1] }).observe(hero);
+  }
+  if (contact) {
+    new IntersectionObserver(([e]) => {
+      contactOnscreen = e.isIntersecting && e.intersectionRatio > 0.1;
+      update();
+    }, { threshold: [0, 0.1, 1] }).observe(contact);
+  }
+})();
+
 // Video sound toggle (default muted to allow autoplay)
 function toggleVideoSound(btn) {
   const wrap = btn.closest('.feature-visual');

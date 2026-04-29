@@ -73,11 +73,11 @@ h1, h2, h3, h4 {
 }
 
 .section {
-  padding: var(--section-pad) 0;
+  padding-block: var(--section-pad);
 }
 
 .section-tight {
-  padding: calc(var(--section-pad) * 0.6) 0;
+  padding-block: calc(var(--section-pad) * 0.6);
 }
 
 hr.rule {
@@ -227,7 +227,8 @@ header.nav {
 
 /* ---------- Hero ---------- */
 .hero {
-  padding: 64px 0 var(--section-pad);
+  padding-top: 64px;
+  padding-bottom: var(--section-pad);
   position: relative;
   overflow: hidden;
 }
@@ -262,6 +263,43 @@ header.nav {
   font-style: italic;
   color: var(--accent);
   font-weight: 400;
+}
+
+/* ---------- Sticky mobile CTA ---------- */
+.sticky-cta {
+  display: none;
+  position: fixed;
+  left: 50%;
+  bottom: 16px;
+  bottom: max(16px, env(safe-area-inset-bottom, 16px));
+  transform: translateX(-50%);
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  background: var(--accent);
+  color: var(--cream);
+  font-family: var(--font-body);
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  border-radius: 100px;
+  white-space: nowrap;
+  box-shadow: 0 8px 28px -6px rgba(184, 92, 56, 0.55), 0 2px 8px rgba(0,0,0,0.18);
+  z-index: 60;
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.25s;
+}
+.sticky-cta .arrow { transition: transform 0.2s; }
+.sticky-cta:active { background: var(--accent-dark); }
+
+/* Visible by default at <=960; JS hides it via .is-hidden when on hero or contact */
+@media (max-width: 960px) {
+  .sticky-cta { display: inline-flex; }
+}
+.sticky-cta.is-hidden {
+  transform: translateX(-50%) translateY(140%);
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* ---------- Video sound toggle ---------- */
@@ -1434,24 +1472,16 @@ footer .f-bottom {
     gap: 40px !important;
   }
 
-  .nav-links {
-    display: flex;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    gap: 18px;
-    padding: 0;
-    margin: 0;
-    list-style: none;
-    flex: 1;
-    scrollbar-width: none;
-  }
-  .nav-links::-webkit-scrollbar { display: none; }
-  .nav-links li { flex-shrink: 0; }
-  .nav-links a { font-size: 13px; white-space: nowrap; }
+  .nav-links { display: none; }
   .nav-inner { gap: 16px; }
   .nav-right .lang-toggle { display: none; }
   .hero-grid { grid-template-columns: 1fr; gap: 48px; }
-  .hero-visual { max-width: 480px; }
+  .hero-visual {
+    max-width: 480px;
+    width: 100%;
+    justify-self: center;
+    margin: 0 auto;
+  }
   .reviews-grid { grid-template-columns: 1fr; }
   .how-grid { grid-template-columns: 1fr; gap: 40px; }
   .feature-block { grid-template-columns: 1fr; gap: 40px; }
@@ -1470,29 +1500,141 @@ footer .f-bottom {
 }
 
 @media (max-width: 560px) {
+  :root {
+    --section-pad: clamp(56px, 14vw, 100px);
+  }
   body { font-size: 16px; }
+
+  /* Typography scales down */
+  .display-xl { font-size: clamp(34px, 9vw, 48px); }
+  .display-l { font-size: clamp(28px, 7.5vw, 38px); }
+  .display-m { font-size: clamp(22px, 6vw, 30px); }
+
+  /* Hero */
+  .hero { padding-top: 32px; padding-bottom: var(--section-pad); }
+  .hero-grid { gap: 32px; }
+  .hero-brand { gap: 10px; margin-bottom: 20px; }
+  .hero-brand svg { width: 38px; height: 38px; }
+  .hero-brand span { font-size: 13px; letter-spacing: 0.18em; }
+  .hero-ctas { flex-direction: column; align-items: stretch; }
+  .hero-ctas .btn { width: 100%; justify-content: center; }
+  .hero-triad span { display: block; margin: 4px 0; }
+  .hero-meta { flex-direction: column; gap: 6px; }
+  .hero-meta span::before { content: none; }
+  .hero-specs { gap: 14px; padding: 16px 0; }
+  .hero-spec-num { font-size: 22px; }
+  .hero-spec-label { font-size: 11px; }
+  .hero-visual { max-height: clamp(360px, 60vh, 480px); border-radius: 18px; }
+
+  /* Nav: hide brand wordmark, keep only icon to save room */
+  .logo span:not(.logo-mark) { display: none; }
+  .nav-inner { padding: 14px var(--gutter); }
+
+  /* Trust bar: tighter, allow wrap */
+  .trust-bar { padding: 18px 0; }
+  .trust-logos { gap: 18px; }
+  .trust-logos img { height: 26px !important; }
+  .trust-label { font-size: 11px; }
+
+  /* Section helpers */
+  .section { padding-block: var(--section-pad); }
   .accessories-grid { grid-template-columns: 1fr; }
   .install-steps { grid-template-columns: 1fr; }
   .footer-grid { grid-template-columns: 1fr; }
-  .hero-ctas { flex-direction: column; align-items: stretch; }
-  .hero-ctas .btn { width: 100%; justify-content: center; }
+
+  /* Virtual Keys: drop the desktop margin and rounded corners on mobile so it
+     aligns with the other full-bleed sections. Also kill the inline 40px inner
+     padding so content sits at the same gutter as everything else. */
+  section[class~="section"][style*="border-radius: 32px"][style*="margin: 0 var(--gutter)"] {
+    margin: 0 !important;
+    border-radius: 0 !important;
+  }
+  .feature-block.reverse[style*="padding: 0 40px"] {
+    padding: 0 !important;
+  }
+
+  /* CTAs */
   .compat-ctas { flex-direction: column; align-items: stretch; }
   .compat-ctas .btn { width: 100%; justify-content: center; }
-  .hero-triad span { display: block; margin: 4px 0; }
-  .hero-meta { flex-direction: column; gap: 6px; }
-  .hero-specs { gap: 18px; padding: 16px 0; }
-  .hero-spec-num { font-size: 24px; }
-  .hero-spec-label { font-size: 11px; }
+
+  /* Comparison table */
   .compare-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 14px; }
   .compare-table { min-width: 620px; font-size: 13px; }
   .compare-table thead th, .compare-table tbody td { padding: 14px 12px; }
   .compare-table td.compare-row-label { width: auto; min-width: 130px; }
-  .compat-block { grid-template-columns: 1fr; gap: 32px; padding: 36px 28px; }
-  .compat-card { position: static; }
+
+  /* Compatibility block */
+  .compat-block { grid-template-columns: 1fr; gap: 28px; padding: 28px 22px; }
+  .compat-card { position: static; padding: 22px; }
+
+  /* Access types */
   .access-row { grid-template-columns: 1fr; gap: 4px; padding: 12px 14px; }
   .access-row.access-head { display: none; }
   .access-row strong { font-size: 13px; }
-  .hero-meta span::before { content: none; }
+
+  /* Models featured comparison block (Размер имеет значение) */
+  #models > div[style*="padding:32px 40px"] {
+    padding: 22px 18px !important;
+  }
+
+  /* Pricing card */
+  .price-card { padding: 28px 22px; }
+  .price-total { font-size: 36px; flex-wrap: wrap; }
+
+  /* Use cases icons */
+  .usecase-card { padding: 28px 22px; }
+
+  /* Installation */
+  .install-header { padding: 0; }
+  .install-step { padding: 22px; }
+  .install-zone { padding: 22px; font-size: 13px; }
+  .install-cta { padding: 22px; }
+
+  /* Contact form */
+  .contact-form { padding: 24px; }
+  .contact-form .form-group input,
+  .contact-form .form-group textarea,
+  .contact-form .form-group select { padding: 13px 16px; }
+
+  /* Engineering dark section labels: stack into 2 cols when overflowing */
+  .section[style*="background: var(--ink)"] div[style*="position: absolute"][style*="bottom: 0"] {
+    flex-wrap: wrap;
+    gap: 12px 20px !important;
+    padding: 16px 20px !important;
+    font-size: 11px;
+  }
+  .section[style*="background: var(--ink)"] div[style*="position: absolute"][style*="bottom: 0"] span {
+    font-size: 10px !important;
+    flex: 1 1 auto;
+  }
+
+  /* Engineering stats row (#1 в мире etc) */
+  .section[style*="background: var(--ink)"] div[style*="margin-top: 32px"][style*="display: flex"] {
+    gap: 16px !important;
+  }
+
+  /* FAQ — keep horizontal padding at 0 so it aligns with the rest of the
+     section content (only the section gutter applies). */
+  .faq-question { padding: 18px 0; font-size: 15px; gap: 16px; }
+  .faq-answer-inner { padding: 0 0 18px; font-size: 14px; }
+
+  /* Reviews */
+  .review-card { padding: 24px; }
+
+  /* Section "Размер имеет значение" intro padding cleanup */
+  #models > p.muted { padding: 0 8px; }
+}
+
+/* Tiny phones (≤380px) */
+@media (max-width: 380px) {
+  :root { --gutter: 14px; }
+  .display-xl { font-size: 32px; line-height: 1.08; }
+  .display-l { font-size: 26px; }
+  .hero-spec-num { font-size: 20px; }
+  .hero-brand span { font-size: 11px; }
+  .hero-brand svg { width: 32px; height: 32px; }
+  .compat-block { padding: 22px 16px; }
+  .price-card { padding: 22px 16px; }
 }
 
 /* ---------- Subtle reveal on scroll ---------- */
