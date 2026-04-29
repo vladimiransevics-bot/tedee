@@ -272,6 +272,240 @@ header.nav {
   font-weight: 400;
 }
 
+/* ---------- iPhone mockup with cycling Tedee notifications ---------- */
+.phone-visual {
+  background: linear-gradient(140deg, var(--paper-warm) 0%, var(--paper) 60%, var(--accent-soft) 130%);
+  padding: 32px;
+  border: 1px solid var(--line-soft);
+  text-transform: none;
+  letter-spacing: normal;
+  overflow: hidden;
+  aspect-ratio: 1;
+}
+.phone-mockup {
+  width: 100%;
+  max-width: 280px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.phone-frame {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 9/19.5;
+  background: linear-gradient(160deg, #1f1d1b 0%, #2a2622 50%, #1a1614 100%);
+  border-radius: 36px;
+  padding: 8px;
+  box-shadow:
+    0 30px 60px -20px rgba(26, 22, 20, 0.55),
+    0 12px 24px -8px rgba(26, 22, 20, 0.35),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.06);
+}
+.phone-notch {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 22px;
+  background: #0a0908;
+  border-radius: 100px;
+  z-index: 5;
+  box-shadow: inset 0 0 0 0.5px rgba(255,255,255,0.08);
+}
+.phone-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 30% 10%, rgba(184, 92, 56, 0.18), transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(232, 205, 181, 0.25), transparent 60%),
+    linear-gradient(180deg, #14110f 0%, #2a221d 100%);
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  color: #fff;
+  font-family: -apple-system, "SF Pro Display", "Helvetica Neue", system-ui, sans-serif;
+}
+.phone-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 22px 0;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.phone-status-right {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #fff;
+}
+.phone-status-right svg {
+  width: 14px;
+  height: 10px;
+  fill: currentColor;
+}
+.phone-battery {
+  display: inline-block;
+  width: 22px;
+  height: 11px;
+  border: 1px solid rgba(255,255,255,0.7);
+  border-radius: 3px;
+  position: relative;
+  padding: 1px;
+}
+.phone-battery::after {
+  content: '';
+  position: absolute;
+  right: -3px;
+  top: 3px;
+  width: 2px;
+  height: 5px;
+  background: rgba(255,255,255,0.7);
+  border-radius: 1px;
+}
+.phone-battery span {
+  display: block;
+  width: 75%;
+  height: 100%;
+  background: #fff;
+  border-radius: 1px;
+}
+
+.phone-lockscreen-time {
+  text-align: center;
+  padding: 22px 16px 12px;
+  color: #fff;
+}
+.phone-date {
+  font-size: 11px;
+  font-weight: 500;
+  opacity: 0.8;
+  margin-bottom: 4px;
+  letter-spacing: 0;
+}
+.phone-clock {
+  font-family: -apple-system, "SF Pro Display", system-ui, sans-serif;
+  font-weight: 200;
+  font-size: 56px;
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+
+.phone-notif-stack {
+  position: relative;
+  flex: 1;
+  margin: 14px 12px 18px;
+  height: 84px;
+  min-height: 84px;
+}
+.phone-notif {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 14px;
+  color: #1a1a1a;
+  opacity: 0;
+  transform: translateY(14px) scale(0.96);
+  animation: phoneNotifCycle 16s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.18);
+}
+.phone-notif:nth-child(1) { animation-delay: 0s; }
+.phone-notif:nth-child(2) { animation-delay: 4s; }
+.phone-notif:nth-child(3) { animation-delay: 8s; }
+.phone-notif:nth-child(4) { animation-delay: 12s; }
+
+@keyframes phoneNotifCycle {
+  0%, 1%   { opacity: 0; transform: translateY(14px) scale(0.96); }
+  4%, 23%  { opacity: 1; transform: translateY(0) scale(1); }
+  26%, 100% { opacity: 0; transform: translateY(-8px) scale(0.97); }
+}
+
+.notif-icon {
+  flex-shrink: 0;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #5BC8E6 0%, #3BA9CF 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 22px;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+.notif-icon span {
+  transform: translateY(-1px);
+}
+.notif-icon-warn {
+  background: linear-gradient(135deg, #E08A5C 0%, #B85C38 100%);
+}
+.notif-icon-warn span { font-size: 20px; }
+
+.notif-meat {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1px;
+}
+.notif-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 10px;
+  color: rgba(0,0,0,0.55);
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 500;
+  margin-bottom: 1px;
+}
+.notif-app { text-transform: lowercase; }
+.notif-title {
+  font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  margin-bottom: 2px;
+}
+.notif-text {
+  font-family: -apple-system, "SF Pro Text", system-ui, sans-serif;
+  font-size: 10.5px;
+  font-weight: 400;
+  color: #1a1a1a;
+  line-height: 1.3;
+  letter-spacing: -0.005em;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .phone-notif {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+  .phone-notif:not(:first-child) { display: none; }
+}
+
 /* ---------- Sticky mobile CTA ---------- */
 .sticky-cta {
   display: none;
