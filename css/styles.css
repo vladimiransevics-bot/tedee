@@ -264,6 +264,34 @@ header.nav {
   font-weight: 400;
 }
 
+/* ---------- Video sound toggle ---------- */
+.video-sound-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.45);
+  color: rgba(255, 255, 255, 0.95);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 0;
+  transition: background 0.2s, border-color 0.2s, transform 0.15s;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.video-sound-toggle:hover {
+  background: rgba(0, 0, 0, 0.65);
+  border-color: rgba(255, 255, 255, 0.6);
+}
+.video-sound-toggle:active { transform: scale(0.95); }
+.video-sound-toggle svg { width: 18px; height: 18px; display: block; }
+.video-sound-toggle .icon-unmuted { display: none; }
+.video-sound-toggle.is-unmuted .icon-muted { display: none; }
+.video-sound-toggle.is-unmuted .icon-unmuted { display: block; }
+
 .hero-brand {
   display: inline-flex;
   align-items: center;

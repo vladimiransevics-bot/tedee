@@ -20,6 +20,16 @@ document.querySelectorAll('.lang-toggle button').forEach(btn => {
   });
 });
 
+// Video sound toggle (default muted to allow autoplay)
+function toggleVideoSound(btn) {
+  const wrap = btn.closest('.feature-visual');
+  const video = wrap && wrap.querySelector('video');
+  if (!video) return;
+  video.muted = !video.muted;
+  btn.classList.toggle('is-unmuted', !video.muted);
+  btn.setAttribute('aria-label', video.muted ? 'Включить звук' : 'Выключить звук');
+}
+
 // Subtle scroll reveal
 const observer = new IntersectionObserver((entries) => {
   entries.forEach(entry => {
